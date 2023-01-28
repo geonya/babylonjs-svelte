@@ -5,9 +5,8 @@
 	let canvas: HTMLCanvasElement;
 
 	onMount(async () => {
-		let babylon = new Babylon(canvas);
-		babylon.createScene();
-		babylon.action();
+		const babylon = new Babylon(canvas);
+		babylon.run();
 	});
 </script>
 

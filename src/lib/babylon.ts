@@ -19,10 +19,15 @@ export class Babylon {
 
 	constructor(public canvas: HTMLCanvasElement) {
 		this.engine = new Engine(canvas, true);
+		window.addEventListener('resize', () => {
+			this.engine.resize();
+		});
 		this.scene = new Scene(this.engine);
+		this.createScene();
+		this.debug(true);
 	}
 
-	createScene(): void {
+	private createScene(): void {
 		this.setupCamera();
 		this.setupLight();
 		this.createSphere();
@@ -50,9 +55,19 @@ export class Babylon {
 		MeshBuilder.CreateGround('ground', { width: 5, height: 5 }, this.scene);
 	}
 
-	action(): void {
+	private debug(on: boolean) {
+		if (on) {
+			this.scene.debugLayer.show({ overlay: true });
+			return;
+		}
+		this.scene.debugLayer.hide();
+	}
+
+	run(): void {
 		// chrome audio warning fix
 		this.engine.getAudioContext()?.resume();
-		this.engine.runRenderLoop(() => this.scene.render());
+		this.engine.runRenderLoop(() => {
+			this.scene.render();
+		});
 	}
 }

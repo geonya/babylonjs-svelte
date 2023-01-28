@@ -1,5 +1,5 @@
 <script>
-	import Main from '../pages/Main.svelte';
+	import BabylonCanvas from '../components/BabylonCanvas.svelte';
 </script>
 
-<Main />
+<BabylonCanvas />
