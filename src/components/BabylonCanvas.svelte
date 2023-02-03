@@ -6,7 +6,10 @@
 
 	onMount(async () => {
 		const babylon = new Babylon(canvas);
-		babylon.run();
+		babylon.createScene().then(() => {
+			console.log('loading...');
+			babylon.run();
+		});
 	});
 </script>
 
