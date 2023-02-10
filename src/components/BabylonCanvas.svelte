@@ -1,15 +1,11 @@
 <script lang="ts">
+	import { BJSApp } from '$lib/bjs-app';
 	import { onMount } from 'svelte';
-	import { Babylon } from '../lib/babylon';
 
 	let canvas: HTMLCanvasElement;
 
 	onMount(async () => {
-		const babylon = new Babylon(canvas);
-		babylon.createScene().then(() => {
-			console.log('loading...');
-			babylon.run();
-		});
+		new BJSApp(canvas).run();
 	});
 </script>
 
