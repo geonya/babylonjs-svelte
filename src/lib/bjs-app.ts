@@ -1,5 +1,6 @@
-import type { Engine, Scene } from '@babylonjs/core';
+import { UtilityLayerRenderer, type Engine, type Scene } from '@babylonjs/core';
 import { BJSEngine } from './bjs-engine';
+import { BJSGizmo } from './bjs-gizmo';
 import { BJSScene } from './bjs-scene';
 import { AppStates } from './utils/constants';
 import { appStateMachine } from './utils/state-machine';
@@ -9,6 +10,7 @@ export class BJSApp {
 	private readonly stateMachine: Generator;
 	private currentScene: Scene | null = null;
 	private currentState: AppStates | null = null;
+
 	constructor(private readonly canvas: HTMLCanvasElement) {
 		this.engine = new BJSEngine(canvas).engine;
 		this.stateMachine = appStateMachine();
@@ -33,6 +35,8 @@ export class BJSApp {
 	async run() {
 		await this.initialize();
 		this.currentScene = new BJSScene(this.engine).scene;
+		const untilLayer = new UtilityLayerRenderer(this.currentScene);
+		new BJSGizmo(untilLayer).run();
 		this.moveNextAppState(AppStates.CUTSCENE);
 		this.engine.runRenderLoop(async () => {
 			if (!this.canvas || !this.engine || !this.currentScene) return;

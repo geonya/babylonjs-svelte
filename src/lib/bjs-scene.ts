@@ -1,15 +1,12 @@
 import {
 	ArcRotateCamera,
-	Color3,
+	HemisphericLight,
 	Light,
-	PointLight,
 	Scene,
-	Texture,
 	Vector3,
-	type Engine,
-	type IEnvironmentHelperOptions
+	type Engine
 } from '@babylonjs/core';
-import { StarfieldProceduralTexture } from '@babylonjs/procedural-textures';
+
 import type { CameraOptions } from './types';
 
 export class BJSScene {
@@ -17,26 +14,19 @@ export class BJSScene {
 
 	constructor(private readonly engine: Engine) {
 		this._scene = new Scene(this.engine);
-		this._scene.createDefaultEnvironment(this.createEnvOptions(this._scene));
+		// this._scene.createDefaultEnvironment(this.createEnvOptions(this._scene));
+
 		const cameraOptions = {
-			camAlpha: 0,
-			camBeta: -Math.PI / 4,
-			camDist: 200,
-			camTarget: new Vector3(0, 0, 0)
+			camAlpha: 1,
+			camBeta: 1,
+			camDist: 3,
+			camTarget: Vector3.Zero()
 		};
 		this.createCamera('camera1', this._scene, cameraOptions);
 		this.createLight(this._scene);
 	}
 	get scene(): Scene {
 		return this._scene;
-	}
-
-	private createStarField(scene: Scene) {
-		const starFieldPT = new StarfieldProceduralTexture('starFieldPT', 512, scene);
-		starFieldPT.coordinatesMode = Texture.FIXED_EQUIRECTANGULAR_MODE;
-		starFieldPT.darkmatter = 1.5;
-		starFieldPT.distfading = 0.75;
-		return starFieldPT;
 	}
 
 	private createCamera(name: string, scene: Scene, options?: CameraOptions) {
@@ -53,22 +43,11 @@ export class BJSScene {
 	}
 
 	private createLight(scene: Scene): Light {
-		const light = new PointLight('startLight', Vector3.Zero(), scene);
-		light.intensity = 2;
-		light.diffuse = new Color3(0.98, 0.9, 1);
-		light.specular = new Color3(1, 0.9, 0.5);
+		const light = new HemisphericLight('light1', new Vector3(0, 1, 0), scene);
 		return light;
 	}
 
 	private createEnvOptions(scene: Scene) {
-		const starFieldPT = this.createStarField(scene);
-		const envOptions: Partial<IEnvironmentHelperOptions> = {
-			skyboxSize: 512,
-			createGround: false,
-			skyboxTexture: starFieldPT,
-			environmentTexture: starFieldPT
-		};
-
-		return envOptions;
+		// return envOptions;
 	}
 }
