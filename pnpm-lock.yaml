@@ -2,6 +2,7 @@ lockfileVersion: 5.4
 
 specifiers:
   '@babylonjs/core': ^5.45.0
+  '@babylonjs/loaders': ^5.47.0
   '@babylonjs/procedural-textures': ^5.45.0
   '@playwright/test': ^1.28.1
   '@sveltejs/adapter-auto': ^1.0.0
@@ -22,6 +23,7 @@ specifiers:
 
 dependencies:
   '@babylonjs/core': 5.46.0
+  '@babylonjs/loaders': 5.47.0_@babylonjs+core@5.46.0
   '@babylonjs/procedural-textures': 5.46.0_@babylonjs+core@5.46.0
 
 devDependencies:
@@ -46,6 +48,15 @@ packages:
 
   /@babylonjs/core/5.46.0:
     resolution: {integrity: sha512-6PCaBByAxeXjM+lX14K2Do1pVbsOeQPA4TCd/Ve+1Gcr2CFKsfPb7c7mtFB90fTlWkN6+tE3zRDeu1ZdvSVKPQ==}
+    dev: false
+
+  /@babylonjs/loaders/5.47.0_@babylonjs+core@5.46.0:
+    resolution: {integrity: sha512-yceepCwsyCnjvfjUAiiJUjXa8A8FB7MM1XWvyTsm8kuzQ/b05y9JQoZ+/7sYM2BdONOaEiz/4GYnUYJVPg8eZw==}
+    peerDependencies:
+      '@babylonjs/core': ^5.22.0
+      babylonjs-gltf2interface: ^5.22.0
+    dependencies:
+      '@babylonjs/core': 5.46.0
     dev: false
 
   /@babylonjs/procedural-textures/5.46.0_@babylonjs+core@5.46.0:

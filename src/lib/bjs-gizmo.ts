@@ -1,6 +1,7 @@
 import {
 	BoundingBoxGizmo,
 	Color3,
+	Mesh,
 	MeshBuilder,
 	StandardMaterial,
 	Texture,
@@ -33,17 +34,11 @@ export class BJSGizmo {
 		box.material = mat;
 		return box;
 	}
-
-	run() {
+	editMesh(mesh: Mesh) {
 		const gizmo = new BoundingBoxGizmo(Color3.FromHexString('#fd60ba'), this.untilLayer);
 		gizmo.ignoreChildren = true;
-		// gizmo.scaleBoxSize = 0.02;
 		gizmo.fixedDragMeshScreenSize = true;
-
-		const box = this.createBox();
-
-		// const bb = BoundingBoxGizmo.MakeNotPickableAndWrapInBoundingBox(box);
-		gizmo.attachedMesh = box;
+		gizmo.attachedMesh = mesh;
 		gizmo.onScaleBoxDragObservable.add(() => {
 			console.log('scaleDrag');
 		});

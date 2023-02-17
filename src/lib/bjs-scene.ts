@@ -1,53 +1,18 @@
-import {
-	ArcRotateCamera,
-	HemisphericLight,
-	Light,
-	Scene,
-	Vector3,
-	type Engine
-} from '@babylonjs/core';
-
-import type { CameraOptions } from './types';
+import { ArcRotateCamera, HemisphericLight, Scene, Vector3, type Engine } from '@babylonjs/core';
 
 export class BJSScene {
 	private _scene: Scene;
 
-	constructor(private readonly engine: Engine) {
+	constructor(private readonly engine: Engine, private readonly canvas: HTMLCanvasElement) {
 		this._scene = new Scene(this.engine);
-		// this._scene.createDefaultEnvironment(this.createEnvOptions(this._scene));
-
-		const cameraOptions = {
-			camAlpha: 1,
-			camBeta: 1,
-			camDist: 3,
-			camTarget: Vector3.Zero()
-		};
-		this.createCamera('camera1', this._scene, cameraOptions);
-		this.createLight(this._scene);
+		this.scene.createDefaultCameraOrLight(true, true, true);
+		const camera: ArcRotateCamera = this.scene.activeCamera as ArcRotateCamera;
+		camera.useAutoRotationBehavior = true;
+		camera.setPosition(new Vector3(0, -0.02, 0.1));
+		this.scene.lights[0].dispose();
+		new HemisphericLight('light', new Vector3(0.1, 0.1, 0.1), this.scene);
 	}
 	get scene(): Scene {
 		return this._scene;
-	}
-
-	private createCamera(name: string, scene: Scene, options?: CameraOptions) {
-		const camera = new ArcRotateCamera(
-			name,
-			options.camAlpha,
-			options.camBeta,
-			options.camDist,
-			options.camTarget,
-			scene
-		);
-		camera.attachControl(true);
-		return camera;
-	}
-
-	private createLight(scene: Scene): Light {
-		const light = new HemisphericLight('light1', new Vector3(0, 1, 0), scene);
-		return light;
-	}
-
-	private createEnvOptions(scene: Scene) {
-		// return envOptions;
 	}
 }

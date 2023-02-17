@@ -34,6 +34,7 @@
 	"type": "module",
 	"dependencies": {
 		"@babylonjs/core": "^5.45.0",
+		"@babylonjs/loaders": "^5.47.0",
 		"@babylonjs/procedural-textures": "^5.45.0"
 	}
 }
